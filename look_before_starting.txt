@@ -1,0 +1,38 @@
+Battleship AI Base System 
+Ehsan Shishir (Base Setup + Agent 1 Implementation)
+
+This repository, for now has the base system for the Battleship AI project and a complete implementation of Agent 1 (pure random guessing).
+
+1. What I have Implemented So Far:
+  - Python project scaffold with test setup.
+  - Core Battleship game engine:
+    - 10x10 board (not configurable for now)
+    - Different ships and their block sizes [5 (Carrier), 4 (Battleship), 3 (Cruiser), 3 (Submarine), 2 (Destroyer)]
+    - legal ship placement checking
+    - hit/miss/sunk handling
+    - game-over detection
+  - Shared interfaces and data contracts for agents and placement strategies.
+  - Agent 1:
+    - pure random guessing but only on the cells that have not been tried previously
+    - no targeting behavior
+    - also, no probability model
+  - Single-game and multi-game simulation utilities.
+  - Test suite for engine behavior, Agent 1 behavior, and simulation reproducibility.
+
+2. Feedback Adjustment:
+  The feedback asked for a stronger baseline than random guessing. However, the scope pdf's evaluation part says that Agent 1 (the random guessing) is the baseline. So, instead of agent 1 as baseline we will use agent 2 as the baseline for less random guess reliance. 
+  Thus, the evaluation is adjusted as follows:
+    - Agent 1 random remains implemented and can be used as a lower-bound reference.
+    - Final baseline for comparison should be a smarter strategy (Agent 2 Checkerboard is best suitable).
+    - Advanced agents (Probability heatmap, Monte Carlo) will be compared against that smarter baseline during team integration.
+
+4. Workaround Idea:
+  - To keep Agent 1 implementation strictly random for scope clarity.
+  - For the final evaluation, the baseline will shift to the smarter agent, possibly agent 2 after integration.
+
+5. Install and Run:
+  Install the dependencies (from root): python3 -m pip install -e '.[dev]'
+  Run tests: pytest -q
+  Run a x-game simulation (x is the number of games): python3 -m battleship --games x --seed 42
+  Run a per-game summary view (only for smaller game number): python3 -m battleship --games 5 --seed 42 --per-game
+  Run a verbose single-game trace: python3 -m battleship --games 1 --seed 42 --verbose
