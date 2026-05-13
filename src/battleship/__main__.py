@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import argparse
 
+from .agent_checkerboard import CheckerboardAgent
+from .agent_heatmap import ProbabilityHeatmapAgent
 from .agent_random import RandomAgent
 from .simulation import (
     format_batch_stats,
@@ -12,7 +14,13 @@ from .simulation import (
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run Battleship Agent 1 random simulation.")
+    parser = argparse.ArgumentParser(description="Run Battleship AI simulations.")
+    parser.add_argument(
+        "--agent",
+        choices=("random", "checkerboard", "heatmap"),
+        default="random",
+        help="Agent strategy to run.",
+    )
     parser.add_argument("--games", type=int, default=100, help="Number of games to run.")
     parser.add_argument("--seed", type=int, default=42, help="Seed for reproducible runs.")
     parser.add_argument(
@@ -27,7 +35,12 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    agent = RandomAgent(seed=args.seed)
+    agents = {
+        "random": RandomAgent(seed=args.seed),
+        "checkerboard": CheckerboardAgent(),
+        "heatmap": ProbabilityHeatmapAgent(),
+    }
+    agent = agents[args.agent]
     stats = run_batch(
         agent,
         games=args.games,
