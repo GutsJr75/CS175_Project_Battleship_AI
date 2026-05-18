@@ -25,6 +25,7 @@ class Observation:
     untried_cells: Set[Coord]
     past_moves: Dict[Coord, ShotResult]
     sunk_ship_sizes: Tuple[int, ...] = ()
+    sunken_ship_coordinates: Tuple[Tuple[Coord, ...], ...] = ()
 
 
 @dataclass

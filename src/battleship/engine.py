@@ -47,6 +47,7 @@ class BattleshipGame:
         self.ship_positions = ship_positions
         self.attacked_cells: Set[Coord] = set()
         self.sunk_ship_sizes: List[int] = []
+        self.sunken_ship_coordinates: List[Set[Coord]] = []
         self._validate_ship_positions()
 
         self._coord_to_ship_index: Dict[Coord, int] = {}
@@ -123,8 +124,10 @@ class BattleshipGame:
         remaining.remove(coord)
 
         if len(remaining) == 0:
-            sunk_size = len(self.ship_positions[ship_index])
+            sunk_ship = set(self.ship_positions[ship_index])
+            sunk_size = len(sunk_ship)
             self.sunk_ship_sizes.append(sunk_size)
+            self.sunken_ship_coordinates.append(sunk_ship)
             return ShotResult.SUNK
 
         return ShotResult.HIT
@@ -153,7 +156,11 @@ def run_single_game(
             untried_cells=game.available_cells(),
             past_moves=dict(history),
             sunk_ship_sizes=tuple(game.sunk_ship_sizes),
+            sunken_ship_coordinates=tuple(
+                tuple(sorted(ship)) for ship in game.sunken_ship_coordinates
+            ),
         )
+
         shot = agent.select_shot(observation)
         result = game.fire(shot)
         agent.on_shot_result(shot, result)
