@@ -17,7 +17,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run Battleship AI simulations.")
     parser.add_argument(
         "--agent",
-        choices=("random", "checkerboard", "heatmap", "mc"),
+        choices=("random", "checkerboard", "heatmap", "bayesian_mc"),
         default="random",
         help="Agent strategy to run.",
     )
@@ -39,7 +39,7 @@ def main() -> None:
         "random": RandomAgent(seed=args.seed),
         "checkerboard": CheckerboardAgent(),
         "heatmap": ProbabilityHeatmapAgent(),
-        "bayesian": BayesianMCAgent()
+        "bayesian_mc": BayesianMCAgent()
     }
     agent = agents[args.agent]
     stats = run_batch(
