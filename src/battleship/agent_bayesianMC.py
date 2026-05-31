@@ -225,4 +225,3 @@ class BayesianMCAgent:
     def _in_bounds(self, coord: Coord, board_size: int) -> bool:
         row, col = coord
         return 0 <= row < board_size and 0 <= col < board_size
-
