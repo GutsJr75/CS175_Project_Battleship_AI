@@ -26,7 +26,7 @@ class BayesianMCAgent:
     """
 
     ship_sizes: tuple[int, ...] = (5, 4, 3, 3, 2)
-    name: str = "Agent 5 - Bayesian Search"
+    name: str = "Agent 4 - Bayesian Search"
     max_configurations: int = 750
     seed: Optional[int] = None
     
